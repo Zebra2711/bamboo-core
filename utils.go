@@ -53,11 +53,17 @@ func IsVowel(chr rune) bool {
 	return isVowel
 }
 
+var vowelPositions = func() map[rune]int {
+	m := make(map[rune]int, len(Vowels))
+	for i, v := range Vowels {
+		m[v] = i
+	}
+	return m
+}()
+
 func FindVowelPosition(chr rune) int {
-	for pos, v := range Vowels {
-		if v == chr {
-			return pos
-		}
+	if pos, ok := vowelPositions[chr]; ok {
+		return pos
 	}
 	return -1
 }
