@@ -25,13 +25,18 @@ func IsSpace(key rune) bool {
 	return key == ' '
 }
 
-func IsPunctuationMark(key rune) bool {
+
+var punctuationSet = func() map[rune]struct{} {
+	m := make(map[rune]struct{}, len(PunctuationMarks))
 	for _, c := range PunctuationMarks {
-		if c == key {
-			return true
-		}
+		m[c] = struct{}{}
 	}
-	return false
+	return m
+}()
+
+func IsPunctuationMark(key rune) bool {
+	_, ok := punctuationSet[key]
+	return ok
 }
 
 func IsWordBreakSymbol(key rune) bool {
